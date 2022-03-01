@@ -11,6 +11,7 @@ from collections import Counter
 from tqdm import tqdm
 import difflib
 import re
+import time
 
 file_pair = []
 data_dir = './data/'
@@ -76,7 +77,8 @@ def get_matrix (exp:DataFrame, exp_new:DataFrame, struc:DataFrame):
             else:
                 t1 = len(list((Counter(source_tmp['edge_bin']) & Counter(target_tmp['edge_bin'])).elements()))
                 t2 = len(list((Counter(source_tmp['edge_type']) & Counter(target_tmp['edge_type'])).elements()))
-                t3 = 5 - int(difflib.SequenceMatcher(None, get_unit(source_tmp['node_type'].values[0]), get_unit(target_tmp['node_type'].values[0])).quick_ratio() * 5)
+                t3 = 5 - int(difflib.SequenceMatcher(None, get_unit(source_tmp['node_type'].values[0]), 
+                        get_unit(target_tmp['node_type'].values[0])).quick_ratio() * 5)
                 cost = 2 * len(source_tmp) - t1 - t2 + t3
                 line.append(cost)
         matrix.append(line)
